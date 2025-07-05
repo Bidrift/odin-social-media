@@ -1,0 +1,8 @@
+<% if controller_name != 'sessions' && controller_name != "registrations" %>
+    <% if user_signed_in? %>
+        <p>Welcome, <%= current_user.username %></p>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+    <% else %>
+        <%= button_to "Sign in", new_user_session_path, method: :get %>
+    <% end %>
+<% end %>
