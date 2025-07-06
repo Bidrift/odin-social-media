@@ -1,8 +1,27 @@
-<% if controller_name != 'sessions' && controller_name != "registrations" %>
-    <% if user_signed_in? %>
-        <p>Welcome, <%= current_user.username %></p>
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-        <%= button_to "Sign in", new_user_session_path, method: :get %>
-    <% end %>
-<% end %>
+<div class="container text-light gap-4">
+    <a href="/" class="navbar-brand fw-bolder fs-4 text-light">Sodin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto gap-3">
+            <li class="nav-item">
+                <a href="/" class="nav-link active text-light">Home</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto gap-5 align-items-center">
+            <% if controller_name != 'sessions' && controller_name != "registrations" %>
+                <% if user_signed_in? %>
+                    <li class="nav-item">
+                        <span>Welcome, </span><span class="fs-3 fw-bolder"><%= current_user.username %>!</span>
+                    </li>
+                    <li class="nav-item">
+                        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light" %>
+                    </li>
+                <% else %>
+                    <li class="nav-item"><%= button_to "Sign in", new_user_session_path, method: :get, class: "btn btn-light" %></li>
+                <% end %>
+            <% end %>
+        </ul>
+    </div>
+</div>

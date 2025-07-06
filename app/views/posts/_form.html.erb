@@ -1,0 +1,14 @@
+<div class="bg-white px-4 py-4 mb-3 shadow-sm">
+    <%= form_with model: @post, class: "needs-validation d-flex gap-3 flex-column" do |form| %>
+        <%= form.hidden_field :creator_id, required: true %>
+    
+        <div class="control">
+            <% unless @post.persisted? %>
+                <%= form.label :body, "Add a new post", class: "form-label fs-5" %>
+            <% end %>
+            <%= form.text_area :body, class: "form-control", placeholder: "What's on my mind?", required: true, rows: 5 %>
+        </div>
+
+        <%= form.submit @post.persisted? ? "Edit Post" : "Create Post", class: "btn btn-primary align-left btn-block" %>
+    <% end %>
+</div>
