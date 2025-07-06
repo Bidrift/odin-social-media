@@ -1,0 +1,16 @@
+<div id="comment-<%= comment.id %>" class="mb-3">
+    <h6><%= comment.commenter.username %>
+        <% if comment.created_at != comment.updated_at %>
+            <small class="fw-light">(Edited)</small>
+        <% end %>
+    </h6>
+    <p class="m-0 p-0"><%= comment.body %></p>
+    <div class="comment-controls">
+        <% if current_user == comment.commenter %>
+            <%= link_to "Edit", edit_post_comment_path(comment.post, comment, format: :turbo_stream) %>
+        <% end %>
+        <% if [comment.commenter, comment.post.creator].include? current_user %>
+            <%= link_to "Delete", post_comment_path(comment.post, comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        <% end %>
+    </div>
+</div>

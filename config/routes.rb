@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
   resources :users, only: [:index, :show], param: :username
   root 'posts#index'
-  resources :posts, except: [:new]
+  resources :posts, except: [:new] do 
+    resources :comments, only: [:edit, :create, :update, :destroy]
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

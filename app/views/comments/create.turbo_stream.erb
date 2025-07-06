@@ -1,0 +1,5 @@
+<% if @comment.post.comments.size == 1 %>
+    <%= turbo_stream.update("comments-"+@comment.post.id.to_s, @comment) %>
+<% else %>
+    <%= turbo_stream.append("comments-"+@comment.post.id.to_s, @comment) %>
+<% end %>

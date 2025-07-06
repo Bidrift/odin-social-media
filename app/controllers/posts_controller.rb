@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :authorize_user, only: [:create, :update]
   
   def index
-    @posts = Post.includes(:creator).all.reverse
+    @posts = Post.includes(:creator, comments: :commenter).all.reverse
     if user_signed_in?
       @post = current_user.posts.build()
     end
@@ -51,6 +51,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments.includes(:users)
   end
 
   private
