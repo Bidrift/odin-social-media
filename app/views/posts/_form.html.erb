@@ -7,6 +7,11 @@
                 <%= form.label :body, "Add a new post", class: "form-label fs-5" %>
             <% end %>
             <%= form.text_area :body, class: "form-control", placeholder: "What's on my mind?", required: true, rows: 5 %>
+            <% @post.errors.full_messages.each do |message| %>
+                <div class="form-text">
+                    <%= message %>
+                </div>
+            <% end %>
         </div>
 
         <%= form.submit @post.persisted? ? "Edit Post" : "Create Post", class: "btn btn-primary align-left btn-block" %>

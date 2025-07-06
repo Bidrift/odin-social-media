@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :authorize_user, only: [:create, :update]
   
   def index
-    @posts = Post.all.reverse
+    @posts = Post.includes(:creator).all.reverse
     if user_signed_in?
       @post = current_user.posts.build()
     end
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
       flash['success'] = "Post created successfully"
       redirect_to posts_path
     else
-      render :new, status: :unprocessable_entity
+      head(:unprocessable_entity)
     end
   end
 
@@ -28,7 +28,7 @@ class PostsController < ApplicationController
       flash['success'] = 'Post deleted successfully'
       redirect_to posts_path
     else
-      render :new
+      head(:unprocessable_entity)
     end
   end
 
