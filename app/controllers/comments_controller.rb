@@ -1,7 +1,12 @@
 class CommentsController < ApplicationController
     before_action :authenticate_user!
 
-    respond_to :turbo_stream
+    before_action only: [:create, :update] do
+        authorize_user(comment_params[:commenter_id])
+    end
+    before_action only: [:destroy, :edit] do
+        authorize_user(Comment.find(params[:id]).commenter.id)
+    end
 
     def create
         @comment = Comment.new(comment_params)
@@ -27,9 +32,7 @@ class CommentsController < ApplicationController
 
     def edit
         @comment = Comment.find(params[:id])
-        respond_to do |format|
-            format.turbo_stream { render turbo_stream: turbo_stream.update("comment-"+@comment.id.to_s, partial: 'form', locals: { comment: @comment })}
-        end
+        render turbo_stream: turbo_stream.update("comment-"+@comment.id.to_s, partial: 'form', locals: { comment: @comment })
     end
 
     def update

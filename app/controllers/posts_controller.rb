@@ -1,6 +1,12 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  before_action :authorize_user, only: [:create, :update]
+
+  before_action only: [:create, :update] do
+    authorize_user(post_params[:creator_id])
+  end
+  before_action only: [:destroy, :edit] do
+    authorize_user(Post.find(params[:id]).creator.id)
+  end
   
   def index
     @posts = Post.includes(:creator, comments: :commenter).all.reverse
@@ -21,9 +27,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    unless authorize_user(@post.creator_id)
-      index
-    end
+    authorize_user(@post.creator_id)
     if @post.destroy
       flash['success'] = 'Post deleted successfully'
       redirect_to posts_path
@@ -34,9 +38,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    unless authorize_user(@post.creator_id)
-      index
-    end
+    authorize_user(@post.creator_id)
   end
 
   def update
@@ -55,15 +57,6 @@ class PostsController < ApplicationController
   end
 
   private
-
-  def authorize_user(param=post_params[:creator_id])
-    unless current_user.id == param.to_i
-      flash['alert'] = "You are not allowed to perform this action"
-      head(:unauthorized)
-      return false
-    end
-    true
-  end
 
   def post_params
     params.expect(post: [:creator_id, :body])
