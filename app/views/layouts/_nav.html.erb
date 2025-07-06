@@ -6,15 +6,24 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto gap-3">
             <li class="nav-item">
-                <a href="/" class="nav-link text-light">Home</a>
+                <a href="/" class="nav-link text-light d-flex gap-3 align-items-center">
+                    <i class="bi bi-house-fill fs-4"></i>
+                    <span>Home</span>
+                </a>
             </li>
             <% if user_signed_in? %>
                 <li class="nav-item">
-                    <a href="<%= user_path(current_user) %>" class="nav-link text-light">Profile</a>
+                    <a href="<%= user_path(current_user) %>" class="nav-link text-light d-flex gap-3 align-items-center">
+                        <i class="bi bi-person-fill fs-4"></i>
+                        <span>Profile</span>
+                    </a>
                 </li>
             <% end %>
             <li class="nav-item">
-                <a href="<%= users_path %>" class="nav-link text-light">Users</a>
+                <a href="<%= users_path %>" class="nav-link text-light d-flex gap-3 align-items-center">
+                    <i class="bi bi-people-fill fs-4"></i>
+                    <span>Users</span>
+                </a>
             </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-5 align-items-center">
@@ -24,10 +33,16 @@
                         <span>Welcome, </span><span class="fs-3 fw-bolder"><%= render partial: 'users/display', locals: { user: current_user } %>!</span>
                     </li>
                     <li class="nav-item">
-                        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light" %>
+                        <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-outline-light d-flex gap-2 align-items-center" do %>
+                            <i class="bi bi-box-arrow-right fs-5"></i> <span>Sign out</span>
+                        <% end %>
                     </li>
                 <% else %>
-                    <li class="nav-item"><%= button_to "Sign in", new_user_session_path, method: :get, class: "btn btn-light" %></li>
+                    <li class="nav-item">
+                        <%= button_to new_user_session_path, method: :get, class: "btn btn-light d-flex gap-2 align-items-center" do  %>
+                            <i class="bi bi-box-arrow-in-right fs-5"></i> <span>Sign in</span>
+                        <% end %>
+                    </li>
                 <% end %>
             <% end %>
         </ul>
