@@ -6,14 +6,22 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto gap-3">
             <li class="nav-item">
-                <a href="/" class="nav-link active text-light">Home</a>
+                <a href="/" class="nav-link text-light">Home</a>
+            </li>
+            <% if user_signed_in? %>
+                <li class="nav-item">
+                    <a href="<%= user_path(current_user) %>" class="nav-link text-light">Profile</a>
+                </li>
+            <% end %>
+            <li class="nav-item">
+                <a href="<%= users_path %>" class="nav-link text-light">Users</a>
             </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-5 align-items-center">
             <% if controller_name != 'sessions' && controller_name != "registrations" %>
                 <% if user_signed_in? %>
                     <li class="nav-item">
-                        <span>Welcome, </span><span class="fs-3 fw-bolder"><%= current_user.username %>!</span>
+                        <span>Welcome, </span><span class="fs-3 fw-bolder"><%= render partial: 'users/display', locals: { user: current_user } %>!</span>
                     </li>
                     <li class="nav-item">
                         <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light" %>

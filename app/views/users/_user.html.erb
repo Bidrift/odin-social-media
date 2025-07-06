@@ -1,0 +1,4 @@
+<div class="bg-white shadow-sm px-4 py-4 mb-2 rounded col-6">
+    <h3><%= render partial: 'display', locals: { user: user } %></h3>
+    <p><%= pluralize(user.posts.size, "post") %></p>
+</div>

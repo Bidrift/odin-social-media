@@ -18,5 +18,10 @@ class User < ApplicationRecord
             uid: auth.uid,
             email: auth.info.email,
             password: Devise.friendly_token[0,20])
-    end
+  end
+
+  def to_param
+      username
+  end
+
 end

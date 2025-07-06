@@ -1,0 +1,10 @@
+<h1>List of users</h1>
+
+<hr/>
+<% if @users.any? %>
+    <div class="row" style="--bs-columns: 2;">
+        <%= render @users %>
+    </div>
+<% else %>
+    <h2>There are no users currently.</h2>
+<% end %>
