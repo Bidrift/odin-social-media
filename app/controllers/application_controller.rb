@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
 
   
 
-  def authorize_user(param)
-    unless current_user.id == param.to_i
+  def authorize_user(param, param2=nil)
+    unless current_user.id == param.to_i || (param2 && param2.to_i == current_user.id)
       flash['alert'] = "You are not allowed to perform this action"
       head(:unauthorized) and return false
     end

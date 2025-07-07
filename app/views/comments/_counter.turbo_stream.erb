@@ -1,0 +1,6 @@
+<turbo-stream action="update" target="comments-counter-<%= @comment.post.id %>">
+    <template>
+        <i class="bi bi-chat fs-3 text-primary"></i>
+        <%= @comment.post.comments.size %>
+    </template>
+</turbo-stream>

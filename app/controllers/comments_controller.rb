@@ -4,8 +4,14 @@ class CommentsController < ApplicationController
     before_action only: [:create, :update] do
         authorize_user(comment_params[:commenter_id])
     end
-    before_action only: [:destroy, :edit] do
-        authorize_user(Comment.find(params[:id]).commenter.id)
+    before_action only: [:destroy] do
+        comment = Comment.find(params[:id])
+        authorize_user(comment.commenter.id, comment.post.creator.id)
+    end
+
+    before_action only: [:edit] do
+        comment = Comment.find(params[:id])
+        authorize_user(comment.commenter.id)
     end
 
     def create
@@ -23,7 +29,7 @@ class CommentsController < ApplicationController
         @comment = Comment.find(params[:id])
         respond_to do |format|
             if @comment.destroy
-                format.turbo_stream { render turbo_stream: turbo_stream.remove("comment-"+@comment.id.to_s)}
+                format.turbo_stream
             else
                 head(:unprocessable_entity)
             end

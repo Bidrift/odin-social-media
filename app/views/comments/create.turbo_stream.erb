@@ -3,3 +3,5 @@
 <% else %>
     <%= turbo_stream.append("comments-"+@comment.post.id.to_s, @comment) %>
 <% end %>
+
+<%= render 'counter' %>
