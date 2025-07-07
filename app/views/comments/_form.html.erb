@@ -1,5 +1,5 @@
 <div class="d-flex gap-3 align-items-start">
-    <%= render partial: 'profiles/avatar', locals: { user: comment.post.creator, size: "48" } %>
+    <%= render partial: 'profiles/avatar', locals: { user: comment.commenter, size: "48" } %>
     <%= form_with model: [comment.post, comment], class: "needs-validation d-flex gap-3 flex-column flex-fill" do |form| %>
         <%= form.hidden_field :commenter_id, required: true, value: current_user.id %>
         <%= form.hidden_field :post_id, required: true %>

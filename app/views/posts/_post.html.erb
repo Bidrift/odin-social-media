@@ -40,7 +40,7 @@
             <% end %>
         </div>
         <% if user_signed_in? %>
-            <% comment = post.comments.build %>
+            <% comment = post.comments.build(commenter: current_user) %>
             <%= render partial: 'comments/form', locals: { comment: comment } %>
         <% end %>
     </div>

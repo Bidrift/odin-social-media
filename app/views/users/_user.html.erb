@@ -1,7 +1,9 @@
 <div class="col">
-    <div class="bg-white shadow-sm px-4 py-4 rounded ">
-        <h3><%= render partial: 'display', locals: { user: user } %></h3>
-        <p><%= pluralize(user.posts.size, "post") %></p>
+    <div class="bg-white shadow-sm px-4 py-4 rounded d-flex gap-3">
+        <div class="user-profile-avatar"><%= render partial: 'profiles/avatar', locals: { user: user, size: "72" } %></div>
+        <div class="user-profile-display">
+            <h3><%= render partial: 'display', locals: { user: user } %></h3>
+            <p><%= pluralize(user.posts.size, "post") %></p>
+        </div>
     </div>
-    
 </div>
