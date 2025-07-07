@@ -40,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_07_084414) do
 
   create_table "profiles", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "avatar_url", default: "profile.jpg"
+    t.string "avatar_url", default: "profile.jpg", null: false
     t.string "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
