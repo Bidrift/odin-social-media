@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_212326) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_07_084414) do
   create_table "comments", force: :cascade do |t|
     t.integer "post_id", null: false
     t.string "body"
@@ -38,6 +38,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_212326) do
     t.index ["creator_id"], name: "index_posts_on_creator_id"
   end
 
+  create_table "profiles", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "avatar_url", default: "profile.jpg"
+    t.string "bio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -59,4 +68,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_212326) do
   add_foreign_key "likes", "posts", column: "liked_post_id"
   add_foreign_key "likes", "users", column: "liker_id"
   add_foreign_key "posts", "users", column: "creator_id"
+  add_foreign_key "profiles", "users"
 end
