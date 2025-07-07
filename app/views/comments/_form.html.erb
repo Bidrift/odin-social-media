@@ -1,15 +1,19 @@
-<%= form_with model: [comment.post, comment], class: "needs-validation d-flex gap-3 flex-column" do |form| %>
-    <%= form.hidden_field :commenter_id, required: true, value: current_user.id %>
-    <%= form.hidden_field :post_id, required: true %>
-
-    <div class="control">
-        <%= form.text_area :body, class: "form-control", placeholder: "Add a comment", required: true, rows: 2, maxlength: 100 %>
-        <% comment.errors.full_messages.each do |message| %>
-            <div class="form-text">
-                <%= message %>
-            </div>
-        <% end %>
-    </div>
-
-    <%= form.submit comment.persisted? ? "Edit Post" : "Add comment", class: "btn btn-outline-primary" %>
-<% end %>
+<div class="d-flex gap-3 align-items-start">
+    <%= render partial: 'profiles/avatar', locals: { user: comment.post.creator, size: "48" } %>
+    <%= form_with model: [comment.post, comment], class: "needs-validation d-flex gap-3 flex-column flex-fill" do |form| %>
+        <%= form.hidden_field :commenter_id, required: true, value: current_user.id %>
+        <%= form.hidden_field :post_id, required: true %>
+    
+        <div class="form-floating">
+            <%= form.text_area :body, class: "form-control", placeholder: "Write a comment", required: true, rows: 2, maxlength: 100 %>
+            <%= form.label :body, "Write a comment" %>
+            <% comment.errors.full_messages.each do |message| %>
+                <div class="form-text">
+                    <%= message %>
+                </div>
+            <% end %>
+        </div>
+    
+        <%= form.submit comment.persisted? ? "Edit Post" : "Add comment", class: "btn btn-outline-primary" %>
+    <% end %>
+</div>

@@ -1,3 +1,16 @@
-<h1>This is the personal profile for <%= render partial: 'display', locals: { user: @user } %></h1>
+<div class="profile-info-container mb-5 d-flex align-items-start gap-5">
+    <div class="profile-info-image">
+        <%= render partial: 'profiles/avatar', locals: { user: @user, size: "128" } %>
+    </div>
+    <div class="profile-info-text">
+        <h2>Description</h2>
+        <% unless @user.profile.bio.nil? %>
+            <p><%= @user.profile.bio %></p>
+        <% else %>
+            <p>This is my personal page!</p>
+        <% end %>
+    </div>
+</div>
+<h1><%= render partial: 'display', locals: { user: @user } %>'s posts</h1>
 <hr/>
 <%= render @posts %>

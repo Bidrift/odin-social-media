@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one :profile
   has_many :posts, foreign_key: "creator_id"
   has_many :comments, foreign_key: "commenter_id"
   has_many :likes, foreign_key: "liker_id"
@@ -16,12 +17,16 @@ class User < ApplicationRecord
         length: { in: 4..16 }
 
   def self.from_omniauth(auth)
-        where(provider: auth.provider,
+        user_record = where(provider: auth.provider,
         uid: auth.uid).first_or_create(provider: auth.provider,
             username: auth.info.nickname,
             uid: auth.uid,
             email: auth.info.email,
             password: Devise.friendly_token[0,20])
+        if user_record.profile.nil?
+          user_record.create_profile(avatar_url: auth.info.image)
+        end
+        user_record
   end
 
   def to_param

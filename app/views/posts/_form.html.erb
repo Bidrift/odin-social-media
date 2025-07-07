@@ -1,12 +1,15 @@
-<div class="bg-white px-4 py-4 mb-3 shadow-sm">
-    <%= form_with model: @post, class: "needs-validation d-flex gap-3 flex-column" do |form| %>
+<div class="bg-white px-4 py-4 mb-3 shadow-sm d-flex align-items-start gap-3">
+    <%= render partial: 'profiles/avatar', locals: { user: @post.creator, size: "72" } %>
+    <%= form_with model: @post, class: "needs-validation d-flex gap-3 flex-column flex-fill" do |form| %>
         <%= form.hidden_field :creator_id, required: true %>
     
-        <div class="control">
+        <div class="form-floating">
+            <%= form.text_area :body, class: "form-control fs-4", placeholder: "What's on my mind?", required: true, style: "height: 100px;", maxlength: 500 %>
             <% unless @post.persisted? %>
-                <%= form.label :body, "Add a new post", class: "form-label fs-5" %>
+                <%= form.label :body, "Add a new post", class: "form-label" %>
+            <% else %>
+                <%= form.label :body, "Edit your post", class: "form-label" %>
             <% end %>
-            <%= form.text_area :body, class: "form-control", placeholder: "What's on my mind?", required: true, rows: 5, maxlength: 500 %>
             <% @post.errors.full_messages.each do |message| %>
                 <div class="form-text">
                     <%= message %>

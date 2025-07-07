@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   end
   
   def index
-    @posts = Post.includes(:creator, :likes, :likers, comments: :commenter).all.reverse
+    @posts = Post.includes(:likes).includes(:likers).includes(comments: [commenter: :profile]).includes(creator: :profile).all.reverse
     if user_signed_in?
       @post = current_user.posts.build()
     end
