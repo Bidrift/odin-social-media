@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by(username: params[:username])
     if @user
-      @posts = @user.posts.includes(:creator)
+      @posts = @user.posts.includes(:creator, :likes, comments: :commenter)
     end
   end
 end

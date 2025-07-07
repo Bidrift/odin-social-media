@@ -1,0 +1,14 @@
+<turbo-frame id="likes-counter-<%= post.id %>">
+    <% unless current_user.liked_posts.include?(post) %>
+        <%= link_to "", post_likes_path(post), data: {
+            turbo_method: :post,
+            action: "mouseover->likes#hoverIn mouseout->likes#hoverOut" },
+            class: "bi bi-heart fs-3 text-primary" %>
+    <% else %>
+        <%= link_to "", post_like_path(post, current_user.id), data: {
+            turbo_method: :delete,
+            action: "mouseover->likes#hoverIn mouseout->likes#hoverOut" },
+            class: "bi bi-heart-fill fs-3 text-primary" %>
+    <% end %>
+    <%= post.likes.size %>
+</turbo-frame>

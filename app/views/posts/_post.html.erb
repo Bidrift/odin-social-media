@@ -14,7 +14,15 @@
     <% if post.created_at != post.updated_at %>
         <small class="text-muted">Edited</small>
     <% end %>
-
+    <div class="post-info d-flex gap-3 align-items-center">
+        <turbo-frame class="d-flex gap-2 align-items-center fs-4" data-controller="likes" id="likes-counter-<%= post.id %>">
+            <%= render partial: 'likes/like', locals: { post: post } %>
+        </turbo-frame>
+        <turbo-frame class="d-flex gap-2 align-items-center fs-4" id="comments-counter-<%= post.id %>">
+            <i class="bi bi-chat fs-3 text-primary"></i>
+            <%= post.comments.size %>
+        </turbo-frame>
+    </div>
     <br/>
     <h5>Comments</h5>
     <div id="comments-<%= post.id %>-container" class="bg-light p-2 mb-2 rounded border">

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'posts#index'
   resources :posts, except: [:new] do 
     resources :comments, only: [:edit, :create, :update, :destroy]
+    resources :likes, only: [:create, :destroy]
   end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
