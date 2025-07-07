@@ -1,5 +1,5 @@
 <turbo-frame id="likes-counter-<%= post.id %>">
-    <% unless current_user.liked_posts.include?(post) %>
+    <% unless current_user && current_user.liked_posts.include?(post) %>
         <%= link_to "", post_likes_path(post), data: {
             turbo_method: :post,
             action: "mouseover->likes#hoverIn mouseout->likes#hoverOut" },
