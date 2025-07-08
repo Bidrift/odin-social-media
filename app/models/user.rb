@@ -4,8 +4,10 @@ class User < ApplicationRecord
   has_many :comments, foreign_key: "commenter_id"
   has_many :likes, foreign_key: "liker_id"
   has_many :liked_posts, through: :likes
-  has_many :followers
-  has_many :followings
+  has_many :followers_list, foreign_key: "following_id", class_name: "Follow"
+  has_many :followings_list, foreign_key: "follower_id", class_name: "Follow"
+  has_many :followers, through: :followers_list
+  has_many :followings, through: :followings_list
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

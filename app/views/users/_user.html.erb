@@ -1,9 +1,14 @@
 <div class="col">
-    <div class="bg-white shadow-sm px-4 py-4 rounded d-flex gap-3">
+    <div class="bg-white shadow-sm px-4 py-4 rounded d-flex gap-3 justify-content-between align-items-start">
         <div class="user-profile-avatar"><%= render partial: 'profiles/avatar', locals: { user: user, size: "72" } %></div>
-        <div class="user-profile-display">
-            <h3><%= render partial: 'display', locals: { user: user } %></h3>
-            <p><%= pluralize(user.posts.size, "post") %></p>
+        <div class="user-profile-display flex-fill">
+            <h3 class="m-0 p-0"><%= render partial: 'display', locals: { user: user } %></h3>
+            <small><%= pluralize(user.followings_list.accepted.size, "Following") %> • <%= pluralize(user.followers_list.accepted.size, "Followers") %></small>
+            <p class="m-0 p-0"><%= pluralize(user.posts.size, "post") %></p>
+        </div>
+        <div class="user-follow-control d-flex flex-column gap-2 justify-content-center align-items-end">
+            <%= render partial: 'follows/follow', locals: { user: user } %>
+            <%= render partial: 'follows/request', locals: { user: user } %>
         </div>
     </div>
 </div>

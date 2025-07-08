@@ -3,27 +3,37 @@
         <%= render partial: 'profiles/avatar', locals: { user: @user, size: "128" } %>
     </div>
     <div class="profile-info-text flex-fill" data-controller='bio'>
-        <h2><%= render partial: 'display', locals: { user: @user } %></h2>
+        <div class="d-flex align-items-stretch justify-content-between">
+            <h2><%= render partial: 'display', locals: { user: @user } %></h2>
+            <%= render partial: 'follows/follow', locals: { user: @user } %>
+        </div>
         <hr>
-        <h3 class="fs-5">Bio</h3>
-            <div data-controller="bio" data-bio-hide-class="hide-element">
-                <% unless @user.profile.bio.nil? %>
-                    <p data-bio-target="bio" id="user-bio"><%= @user.profile.bio %></p>
-                <% else %>
-                    <p data-bio-target="bio" id="user-bio">This is my personal page!</p>
-                <% end %>
-                <% if @user == current_user %>
-                    <%= form_with model: @user.profile, url: bio_user_profile_path(@user, @user.profile), class: "needs-validation", data: { bio_target: "form" } do |form| %>
-                        <div class="form-floating mb-2">
-                            <%= form.text_area :bio, class: "form-control", required: true %>
-                            <%= form.label :bio, class: "form-label" %>
-                        </div>
-                        <%= form.submit "Confirm", class: "btn btn-primary", data: { action: "bio#toggleTargets" } %>
-                        <%= button_tag "Cancel", type: :button, class: "btn btn-outline-primary", data: { action: "bio#toggleTargets" } %>
+        <div class="profile-content-header-container d-flex justify-content-between gap-5">
+            <div class="profile-bio-container flex-fill flex-grow-0 flex-shrink-1">
+                <h3 class="fs-5">Bio</h3>
+                <div data-controller="bio" data-bio-hide-class="hide-element">
+                    <% unless @user.profile.bio.nil? %>
+                        <p data-bio-target="bio" id="user-bio" class="text-wrap"><%= @user.profile.bio %></p>
+                    <% else %>
+                        <p data-bio-target="bio" id="user-bio" class="text-wrap">This is my personal page!</p>
                     <% end %>
-                    <button type="button" class="btn btn-outline-primary" data-bio-target="edit" data-action="bio#toggleTargets">Edit bio</button>
-                <% end %>
+                    <% if @user == current_user %>
+                        <%= form_with model: @user.profile, url: bio_user_profile_path(@user, @user.profile), class: "needs-validation", data: { bio_target: "form" } do |form| %>
+                            <div class="form-floating mb-2">
+                                <%= form.text_area :bio, class: "form-control", required: true %>
+                                <%= form.label :bio, class: "form-label" %>
+                            </div>
+                            <%= form.submit "Confirm", class: "btn btn-primary", data: { action: "bio#toggleTargets" } %>
+                            <%= button_tag "Cancel", type: :button, class: "btn btn-outline-primary", data: { action: "bio#toggleTargets" } %>
+                        <% end %>
+                        <button type="button" class="btn btn-outline-primary" data-bio-target="edit" data-action="bio#toggleTargets">Edit bio</button>
+                    <% end %>
+                </div>
             </div>
+            <div class="profile-follow-request-container d-flex-col justify-content-start align-items-stretch flex-shrink-0">
+                <%= render partial: 'follows/request', locals: { user: @user } %>
+            </div>
+        </div>
     </div>
 </div>
 <h1><%= render partial: 'display', locals: { user: @user } %>'s posts</h1>

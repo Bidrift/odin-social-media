@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all.includes(:posts)
+    @users = User.all.includes(:posts).includes(:followers_list, :followings_list).includes(:profile)
   end
 
   def show
