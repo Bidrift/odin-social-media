@@ -1,1 +1,15 @@
 <%= turbo_stream.update("user-bio", @profile.bio) %>
+
+<%= turbo_stream.append("user-bio") do %>
+    <% if flash["success"] %>
+        <p class="fs-6 text-success fw-light"><%= flash["success"] %></p>
+    <% end %>
+    <% if flash["alert"] %>
+        <p class="fs-6 text-danger fw-light"><%= flash["alert"] %></p>
+        <ul class="">
+            <% @profile.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    <% end %>
+<% end %>
