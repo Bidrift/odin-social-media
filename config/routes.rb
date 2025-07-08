@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
-  resources :users, only: [:index, :show], param: :username
+  resources :users, only: [:index, :show], param: :username do
+    resources :profiles, only: [] do
+      member do
+        patch 'bio'
+        patch 'avatar'
+      end
+    end
+  end
   root 'posts#index'
   resources :posts, except: [:new] do 
     resources :comments, only: [:edit, :create, :update, :destroy]
