@@ -73,3 +73,5 @@ gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem "dotenv", "~> 3.1"
+
+gem "letter_opener", "~> 1.10", group: :development
