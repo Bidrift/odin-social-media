@@ -1,0 +1,13 @@
+<%= button_to "Following",
+    user_follow_path(user, follow),
+    method: :delete,
+    class: "btn btn-outline-primary", data: {
+        turbo_confirm: "Are you sure?",
+        action: "mouseover->follow#toggleAction mouseout->follow#toggleAction",
+        follow_target: "button",
+        follow_text_value: "Unfollow"
+    }%>
+
+<% content_for :text_value do %>
+    Unfollow
+<% end %>

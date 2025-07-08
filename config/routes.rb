@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         patch 'avatar'
       end
     end
+    resources :follows, only: [:create, :update, :destroy]
   end
   root 'posts#index'
   resources :posts, except: [:new] do 

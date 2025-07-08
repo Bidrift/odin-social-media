@@ -1,0 +1,8 @@
+<%= button_to "Pending Request",
+    user_follow_path(user, follow),
+    method: :delete,
+    class: "btn btn-outline-warning", data: {
+        turbo_confirm: "Are you sure?",
+        action: "mouseover->follow#toggleAction mouseout->follow#toggleAction",
+        follow_target: "button",
+    }%>

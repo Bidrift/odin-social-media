@@ -1,0 +1,14 @@
+<% if user_signed_in? && current_user != user %>
+    <turbo-frame id="follow-<%= user.username %>">
+        <% follow = user.followers_list.find_by(follower: current_user, following: user) %>
+        <div class="d-flex align-items-center gap-3" data-controller="follow" data-follow-danger-class="btn-outline-danger" data-follow-text-value="<%= (not follow.nil?) && follow.pending? ? "Cancel Request" : "Unfollow" %>">
+            <% if follow.nil? %>
+                <%= render partial: 'follows/follow_button', locals: { user: user } %>
+            <% elsif follow.pending? %>
+                <%= render partial: 'follows/pending_button', locals: { user: user, follow: follow } %>
+            <% else %>
+                <%= render partial: 'follows/following_button', locals: { user: user, follow: follow } %>
+            <% end %>
+        </div>
+    </turbo-frame>
+<% end %>

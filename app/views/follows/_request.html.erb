@@ -1,0 +1,13 @@
+<turbo-frame id="follow-request-<%= user.username %>" class="d-flex align-items-center gap-3 justify-content-end">
+    <% if user_signed_in? %>
+        <% if user.followings.include? current_user %>
+            <% follow = user.followings_list.find_by(follower: user, following: current_user) %>
+            <% if follow.pending? %>
+                <%= render partial: 'follows/accept', locals: { user: user, follow: follow } %>
+                <%= render partial: 'follows/reject', locals: { user: user, follow: follow } %>
+            <% else %>
+                <%= render partial: 'follows/remove', locals: { user: user, follow: follow } %>
+            <% end %>
+        <% end %>
+    <% end %>
+</turbo-frame>

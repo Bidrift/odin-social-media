@@ -21,12 +21,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_125334) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
-  create_table "follows", primary_key: ["follower_id", "following_id"], force: :cascade do |t|
+  create_table "follows", force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "following_id", null: false
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["follower_id", "following_id"], name: "index_follows_on_follower_id_and_following_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
     t.index ["following_id"], name: "index_follows_on_following_id"
   end
