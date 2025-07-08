@@ -20,6 +20,8 @@ class User < ApplicationRecord
                   message: "is invalid (only letters, digits and underscore)"},
         length: { in: 4..16 }
 
+  after_create :create_profile
+
   def self.from_omniauth(auth)
         user_record = where(provider: auth.provider,
         uid: auth.uid).first_or_create(provider: auth.provider,
@@ -37,4 +39,9 @@ class User < ApplicationRecord
       username
   end
 
+  private
+
+  def create_profile
+    Profile.where(user_id: id).first_or_create()
+  end
 end

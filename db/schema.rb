@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_125334) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_08_221405) do
   create_table "comments", force: :cascade do |t|
     t.integer "post_id", null: false
     t.string "body"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_125334) do
   create_table "profiles", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "avatar_url", default: "profile.jpg", null: false
-    t.string "bio"
+    t.string "bio", default: "This is my personal page!"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
