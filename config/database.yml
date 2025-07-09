@@ -21,8 +21,13 @@ default: &default
 
 
 development:
-  <<: *default
-  database: odin_social_media_development
+  primary:
+    <<: *default
+    database: odin_social_media_development
+  queue:
+    <<: *default
+    database: odin_social_media_develoment_queue
+    migrations_paths: db/queue_migrate
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
