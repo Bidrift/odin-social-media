@@ -29,9 +29,7 @@ class User < ApplicationRecord
             uid: auth.uid,
             email: auth.info.email,
             password: Devise.friendly_token[0, 20])
-        if user_record.profile.nil?
-          user_record.create_profile(avatar_url: auth.info.image)
-        end
+        Profile.where(user_id: id).first_or_create().update(avatar_url: auth.info.image)
         user_record
   end
 
