@@ -6,16 +6,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :username ])
   end
 
-  
 
-  def authorize_user(param, param2=nil)
+
+  def authorize_user(param, param2 = nil)
     unless current_user.id == param.to_i || (param2 && param2.to_i == current_user.id)
-      flash['alert'] = "You are not allowed to perform this action"
+      flash["alert"] = "You are not allowed to perform this action"
       head(:unauthorized) and return false
     end
   end
-
 end

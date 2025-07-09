@@ -15,9 +15,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable
 
-  validates :username, uniqueness: true, presence: true, 
+  validates :username, uniqueness: true, presence: true,
         format: { with: /\A[a-zA-Z][a-zA-Z0-9_]+\z/,
-                  message: "is invalid (only letters, digits and underscore)"},
+                  message: "is invalid (only letters, digits and underscore)" },
         length: { in: 4..16 }
 
   after_create :create_profile
@@ -28,7 +28,7 @@ class User < ApplicationRecord
             username: auth.info.nickname,
             uid: auth.uid,
             email: auth.info.email,
-            password: Devise.friendly_token[0,20])
+            password: Devise.friendly_token[0, 20])
         if user_record.profile.nil?
           user_record.create_profile(avatar_url: auth.info.image)
         end

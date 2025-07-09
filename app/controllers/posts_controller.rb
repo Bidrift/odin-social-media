@@ -1,15 +1,15 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [ :index ]
 
-  before_action only: [:create, :update] do
+  before_action only: [ :create, :update ] do
     authorize_user(post_params[:creator_id])
   end
-  before_action only: [:destroy, :edit] do
+  before_action only: [ :destroy, :edit ] do
     authorize_user(Post.find(params[:id]).creator.id)
   end
-  
+
   def index
-    @posts = Post.includes(:likes).includes(:likers).includes(comments: [commenter: :profile]).includes(creator: [:profile, :followers_list]).all.reverse
+    @posts = Post.includes(:likes).includes(:likers).includes(comments: [ commenter: :profile ]).includes(creator: [ :profile, :followers_list ]).all.reverse
     if user_signed_in?
       @post = current_user.posts.build()
     end
@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      flash['success'] = "Post created successfully"
+      flash["success"] = "Post created successfully"
       redirect_to posts_path
     else
       head(:unprocessable_entity)
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize_user(@post.creator_id)
     if @post.destroy
-      flash['success'] = 'Post deleted successfully'
+      flash["success"] = "Post deleted successfully"
       redirect_to posts_path
     else
       head(:unprocessable_entity)
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      flash['success'] = "Post updated successfull"
+      flash["success"] = "Post updated successfull"
       redirect_to post_path(@post)
     else
       render :edit, status: :unprocessable_entity
@@ -59,6 +59,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.expect(post: [:creator_id, :body])
+    params.expect(post: [ :creator_id, :body ])
   end
 end

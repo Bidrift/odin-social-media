@@ -2,10 +2,10 @@ class Follow < ApplicationRecord
   belongs_to :follower, class_name: "User"
   belongs_to :following, class_name: "User"
 
-  validates :follower_id, uniqueness: { scope: :following_id}
+  validates :follower_id, uniqueness: { scope: :following_id }
   validate :cannot_follow_self
 
-  enum :status, { pending: 0, accepted: 1}
+  enum :status, { pending: 0, accepted: 1 }
 
   private
 
