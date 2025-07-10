@@ -1,3 +1,7 @@
 <%= link_to user_path(user), class: "text-reset text-decoration-none" do %>
-    <%= image_tag user.profile.avatar_url, class: "rounded-circle shadow-sm", style: "height: "+size+"px;" %>
+    <% if user.profile.avatar.attached? %>
+        <%= image_tag user.profile.avatar.variant(resize_to_fill: [size.to_i, size.to_i, { crop: :centre }]), class: "rounded-circle shadow-sm" %>
+    <% else %>
+        <%= image_tag user.profile.avatar_url, class: "rounded-circle shadow-sm", style: "height: "+size+"px;" %>
+    <% end %>
 <% end %>

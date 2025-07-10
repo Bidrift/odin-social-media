@@ -11,22 +11,31 @@
         <div class="profile-content-header-container d-flex justify-content-between gap-5">
             <div class="profile-bio-container flex-fill flex-grow-0 flex-shrink-1">
                 <h3 class="fs-5">Bio</h3>
-                <div data-controller="bio" data-bio-hide-class="hide-element">
+                <div data-controller="profile" data-profile-hide-class="hide-element">
                     <% unless @user.profile.bio.nil? %>
-                        <p data-bio-target="bio" id="user-bio" class="text-wrap"><%= @user.profile.bio %></p>
+                        <p data-profile-target="bio" id="user-bio" class="text-wrap"><%= @user.profile.bio %></p>
                     <% else %>
-                        <p data-bio-target="bio" id="user-bio" class="text-wrap">This is my personal page!</p>
+                        <p data-profile-target="bio" id="user-bio" class="text-wrap">This is my personal page!</p>
                     <% end %>
                     <% if @user == current_user %>
-                        <%= form_with model: @user.profile, url: bio_user_profile_path(@user, @user.profile), class: "needs-validation", data: { bio_target: "form" } do |form| %>
+                        <%= form_with model: @user.profile, url: bio_user_profile_path(@user, @user.profile), class: "needs-validation", data: { profile_target: "bioForm" } do |form| %>
                             <div class="form-floating mb-2">
                                 <%= form.text_area :bio, class: "form-control", required: true %>
                                 <%= form.label :bio, class: "form-label" %>
                             </div>
-                            <%= form.submit "Confirm", class: "btn btn-primary", data: { action: "bio#toggleTargets" } %>
-                            <%= button_tag "Cancel", type: :button, class: "btn btn-outline-primary", data: { action: "bio#toggleTargets" } %>
+                            <%= form.submit "Confirm", class: "btn btn-primary", data: { action: "profile#toggleBioTargets" } %>
+                            <%= button_tag "Cancel", type: :button, class: "btn btn-outline-primary", data: { action: "profile#toggleBioTargets" } %>
                         <% end %>
-                        <button type="button" class="btn btn-outline-primary" data-bio-target="edit" data-action="bio#toggleTargets">Edit bio</button>
+                        <button type="button" class="btn btn-outline-primary" data-profile-target="editBio" data-action="profile#toggleBioTargets">Edit bio</button>
+                        <button type="button" class="btn btn-outline-primary" data-profile-target="editAvatar" data-action="profile#toggleAvatarTargets">Change avatar</button>
+                        <%= form_with model: @user.profile, url: avatar_user_profile_path(@user, @user.profile), class: "needs-validation", data: { profile_target: "avatarForm" } do |form| %>
+                            <div class="control mb-2">
+                                <%= form.label :avatar, class: "form-label" %>
+                                <%= form.file_field :avatar, class: "form-control", required: true %>
+                            </div>
+                            <%= form.submit "Confirm", class: "btn btn-primary", data: { action: "profile#toggleAvatarTargets" } %>
+                            <%= button_tag "Cancel", type: :button, class: "btn btn-outline-primary", data: { action: "profile#toggleAvatarTargets" } %>
+                        <% end %>
                     <% end %>
                 </div>
             </div>

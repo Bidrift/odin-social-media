@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.includes(posts: [ :creator, :likes, :likers, comments: [ commenter: :profile ] ]).find_by(username: params[:username])
+    @user = User.find_by(username: params[:username])
     if @user
-      @posts = @user.posts
+      @posts = @user.posts.includes(:creator, :likes, :likers, comments: [ commenter: :profile ])
     end
   end
 end
